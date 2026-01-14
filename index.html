@@ -8,7 +8,37 @@
 </head>
 
 <body>
-  <h1>Welcome to J & K Roofing Agent</h1>
+  <h1>Welcome to J & K Roofing AI Agent</h1>
+  
+  <h2 style="margin-top: 20px; margin-bottom: 12px;">Trigger workflow</h2>
+  
+  <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+    <button id="validateLeadsBtn" style="
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #0066cc;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      width: auto;
+    ">Validate Leads</button>
+    
+    <button id="batchCallingBtn" style="
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #003366;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      width: auto;
+    ">Batch Calling</button>
+  </div>
 
   <!-- Vapi Chat Widget -->
   <vapi-widget public-key="f971fe2b-e6a6-4e8c-8b19-6f2790845497" assistant-id="9c5ae04d-5fa0-46b6-86b5-4e31984d3102"
@@ -21,6 +51,63 @@
 
   <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async
     type="text/javascript"></script>
+
+  <script>
+    // n8n Webhook URLs
+    const VALIDATE_LEADS_WEBHOOK_URL = 'https://encoresky.app.n8n.cloud/webhook/trigger_workflow_to_validate_leads';
+    const BATCH_CALLING_WEBHOOK_URL = 'https://encoresky.app.n8n.cloud/webhook/trigger_workflow_for_batch_calling';
+
+    // Function to trigger workflow
+    async function triggerWorkflow(webhookUrl, buttonElement, buttonText) {
+      // Disable button during request
+      buttonElement.disabled = true;
+      const originalText = buttonElement.textContent;
+      buttonElement.textContent = 'Triggering...';
+      
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            source: 'J & K Roofing Website'
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert('Workflow triggered successfully!');
+          console.log('Workflow response:', data);
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error triggering workflow:', error);
+        alert('Failed to trigger workflow. Please check the console for details.');
+      } finally {
+        // Re-enable button
+        buttonElement.disabled = false;
+        buttonElement.textContent = originalText;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const validateLeadsBtn = document.getElementById('validateLeadsBtn');
+      const batchCallingBtn = document.getElementById('batchCallingBtn');
+      
+      // Validate Leads button
+      validateLeadsBtn.addEventListener('click', function() {
+        triggerWorkflow(VALIDATE_LEADS_WEBHOOK_URL, validateLeadsBtn, 'Validate Leads');
+      });
+      
+      // Batch Calling button
+      batchCallingBtn.addEventListener('click', function() {
+        triggerWorkflow(BATCH_CALLING_WEBHOOK_URL, batchCallingBtn, 'Batch Calling');
+      });
+    });
+  </script>
 </body>
 
 </html>
