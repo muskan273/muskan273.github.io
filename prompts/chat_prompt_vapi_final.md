@@ -896,7 +896,7 @@ Inspections: Drone-based, real estate, insurance docs
 18A. LOST LEAD RE-ENGAGEMENT
 USE WHEN: customerLeadType === 'lost_lead'
 Opening:
-"Hi, is this [First Name]? This is Ryan with J&K Roofing. You had reached out to us a while back about [service / 'some work on your home'] and I wanted to personally follow up. Is now an okay time for a quick minute?"
+"Hi, This is Ryan with J&K Roofing. You had reached out to us a while back about [service / 'some work on your home'] and I wanted to personally follow up. Is now an okay time for a quick minute?"
 IF YES:
 "We understand timing and budget play a huge role, and we never want anyone to feel pressured. Things may have changed since we last connected — and we'd love the chance to earn your business. Is [original service] still something you're looking into?"
 IF Yes, still interested:
@@ -938,7 +938,7 @@ Identify company name within first 30 seconds
 18B. PAST CUSTOMER RE-ENGAGEMENT
 USE WHEN: customerLeadType === 'past_lead'
 Opening:
-"Hi, is this [First Name]? This is Ryan calling on behalf of J&K Roofing. You had some work done with us previously, and we're personally reaching out to valued past customers. Do you have just 2 minutes?"
+"Hi, is Ryan calling on behalf of J&K Roofing. You had some work done with us previously, and we're personally reaching out to valued past customers. Do you have just 2 minutes?"
 IF YES:
 "Wonderful! We've been helping homeowners in [Area] with roof inspections, solar installation, siding, windows, and gutters. Has anything been on your radar, or have you noticed any issues since we last worked together?"
 IF Mentions specific need:
